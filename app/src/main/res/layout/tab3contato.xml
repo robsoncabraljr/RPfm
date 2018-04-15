@@ -1,0 +1,134 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="rpfm.cursoandroid.coml.rpfm.MainActivity$PlaceholderFragment"
+    android:background="#e5e6ea">
+
+    <ScrollView
+        android:layout_width="420dp"
+        android:layout_height="90dp"
+        android:id="@+id/scrollView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#ffffff" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/btnTelefoneId"
+            android:onClick="abrirChamadas"
+            android:background="@drawable/telefone"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp" />
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ligar"
+        android:id="@+id/txtTelefoneId"
+        android:layout_alignTop="@+id/scrollView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="32dp" />
+
+    <ScrollView
+        android:layout_width="420dp"
+        android:layout_height="90dp"
+        android:id="@+id/scrollView2"
+        android:layout_below="@+id/scrollView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="18dp"
+        android:background="#ffffff" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/btnWhatsappId"
+            android:background="@drawable/whatsapp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp" />
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Enviar Mensagem"
+        android:id="@+id/txtWhatsappId"
+        android:layout_alignTop="@+id/scrollView2"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="32dp" />
+
+    <ScrollView
+        android:layout_width="420dp"
+        android:layout_height="90dp"
+        android:id="@+id/scrollView3"
+        android:layout_marginTop="22dp"
+        android:background="#ffffff"
+        android:layout_below="@+id/scrollView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/btnFacebookId"
+            android:background="@drawable/facebook"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp" />
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Acessar Perfil"
+        android:id="@+id/txtFacebookId"
+        android:layout_alignTop="@+id/scrollView3"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="32dp"  />
+
+    <ScrollView
+        android:layout_width="420dp"
+        android:layout_height="90dp"
+        android:id="@+id/scrollView4"
+        android:layout_below="@+id/scrollView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="17dp"
+        android:background="#ffffff" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/btnSiteId"
+            android:background="@drawable/site"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp" />
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Acessar Site"
+        android:id="@+id/txtSiteId"
+        android:layout_alignTop="@+id/scrollView4"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="32dp" />
+
+</RelativeLayout>

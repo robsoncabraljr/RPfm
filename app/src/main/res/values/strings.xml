@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Radio Popular Livre - RPfm</string>
+    <string name="action_compartilhar">Compartilhar</string>
+    <string name="action_sobre">Sobre</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

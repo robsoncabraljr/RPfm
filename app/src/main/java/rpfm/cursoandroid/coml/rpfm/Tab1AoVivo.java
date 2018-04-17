@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+
 import com.bumptech.glide.Glide;
 import java.io.IOException;
 
@@ -22,6 +24,8 @@ import java.io.IOException;
  */
 public class Tab1AoVivo extends Fragment {
 
+    private SeekBar volumeSeekbar = null;
+    private AudioManager audioManager = null;
     private Boolean estadoInicial = false;
     private Boolean playPause = true;
     private Boolean estadoImg = true;
@@ -29,21 +33,61 @@ public class Tab1AoVivo extends Fragment {
     private ImageView imgStream;
     private MediaPlayer mediaPlayer;
     private Boolean prepared;
-    //private String stream = "http://hts01.painelstream.net:8364";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab1aovivo, container, false);
 
+        volumeSeekbar = (SeekBar) rootView.findViewById(R.id.seekBarVolumeId);
         imgStream = (ImageView) rootView.findViewById(R.id.imgStreamId);
         btnTocar = (ImageView)  rootView.findViewById(R.id.btnExecutarId);
         btnTocar.setImageResource(R.drawable.play);
         imgStream.setVisibility(imgStream.INVISIBLE);
 
-
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        controleVolume();
 
         return rootView;
+    }
+
+    private void controleVolume()
+    {
+        try
+        {
+
+            audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+            volumeSeekbar.setMax(audioManager
+                    .getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+            volumeSeekbar.setProgress(audioManager
+                    .getStreamVolume(AudioManager.STREAM_MUSIC));
+
+
+            volumeSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+            {
+                @Override
+                public void onStopTrackingTouch(SeekBar arg0)
+                {
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar arg0)
+                {
+                }
+
+                @Override
+                public void onProgressChanged(SeekBar arg0, int progress, boolean arg2)
+                {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                            progress, 0);
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void notificacao() {
@@ -59,8 +103,6 @@ public class Tab1AoVivo extends Fragment {
 
     private void streamPlay() {
         //progressDialog = new ProgressDialog(getActivity());
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         btnTocar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +151,7 @@ public class Tab1AoVivo extends Fragment {
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
+                        //Stub de método gerado automaticamente
                         estadoInicial = false;
                         playPause = true;
                         btnTocar.setImageResource(R.drawable.play);
@@ -120,19 +163,20 @@ public class Tab1AoVivo extends Fragment {
                 prepared = true;
 
             } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
+                //Bloco catch gerado automaticamente
                 Log.d("IllegarArgument", e.getMessage());
                 prepared = false;
                 e.printStackTrace();
             } catch (SecurityException e) {
-                // TODO Auto-generated catch block
+                //Bloco catch gerado automaticamente
                 prepared = false;
                 e.printStackTrace();
             } catch (IllegalStateException e) {
-                // TODO Auto-generated catch block
+                //Bloco catch gerado automaticamente
                 prepared = false;
                 e.printStackTrace();
             } catch (IOException e) {
+                //Bloco catch gerado automaticamente
                 prepared = false;
                 e.printStackTrace();
             }

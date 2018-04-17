@@ -1,17 +1,19 @@
 package rpfm.cursoandroid.coml.rpfm;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import java.io.IOException;
 
@@ -26,10 +28,8 @@ public class Tab1AoVivo extends Fragment {
     private ImageView btnTocar;
     private ImageView imgStream;
     private MediaPlayer mediaPlayer;
-    private ProgressDialog progressDialog;
     private Boolean prepared;
-    private String stream = "http://hts01.painelstream.net:8364";
-
+    //private String stream = "http://hts01.painelstream.net:8364";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,13 +41,26 @@ public class Tab1AoVivo extends Fragment {
         btnTocar.setImageResource(R.drawable.play);
         imgStream.setVisibility(imgStream.INVISIBLE);
 
+
+
         return rootView;
     }
 
+    private void notificacao() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
+        builder.setSmallIcon( R.drawable.icon_notificacao )
+                .setContentTitle( "RPfm 105.3" )
+                .setContentText( "Ao Vivo" )
+                .setAutoCancel( false );
+        int id = 1;
+        NotificationManager notifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notifyManager.notify( id, builder.build() );
+    }
+
     private void streamPlay() {
+        //progressDialog = new ProgressDialog(getActivity());
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        progressDialog = new ProgressDialog(getActivity());
 
         btnTocar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,12 +73,13 @@ public class Tab1AoVivo extends Fragment {
                     estadoImg = true;
                 } else {
                     if(playPause) {
-                        new Player().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,stream);
+                        new Player().execute("http://hts01.kshost.com.br:8364/live");
                     } else {
                         if(!mediaPlayer.isPlaying()) {
                             mediaPlayer.start();
                         }
                     }
+                    notificacao();
                     estadoInicial = true;
                     playPause = false;
                     estadoImg = false;
@@ -87,6 +101,7 @@ public class Tab1AoVivo extends Fragment {
     }
 
     class Player extends AsyncTask<String, Void, Boolean> {
+        private ProgressDialog progressDialog;
         @Override
         protected Boolean doInBackground(String... strings) {
             try {
@@ -104,9 +119,22 @@ public class Tab1AoVivo extends Fragment {
                 mediaPlayer.prepare();
                 prepared = true;
 
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                // TODO Auto-generated catch block
+                Log.d("IllegarArgument", e.getMessage());
                 prepared = false;
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            } catch (IOException e) {
+                prepared = false;
+                e.printStackTrace();
             }
             return prepared;
         }
@@ -117,9 +145,15 @@ public class Tab1AoVivo extends Fragment {
             if(progressDialog.isShowing()) {
                 progressDialog.cancel();
             }
+            Log.d("Prepared", "//" + aBoolean);
             btnTocar.setImageResource(R.drawable.stop);
             mediaPlayer.start();
+            playPause = false;
             imgStream.setVisibility(imgStream.VISIBLE);
+        }
+
+        public Player() {
+            progressDialog = new ProgressDialog(getActivity());
         }
 
         @Override
@@ -135,10 +169,11 @@ public class Tab1AoVivo extends Fragment {
     public void onResume() {
         super.onResume();
         if(estadoInicial) {
-            //mediaPlayer.start();
+            mediaPlayer.start();
             checkIsPlaying();
+        } else {
+            streamPlay();
         }
-        streamPlay();
     }
 
     @Override

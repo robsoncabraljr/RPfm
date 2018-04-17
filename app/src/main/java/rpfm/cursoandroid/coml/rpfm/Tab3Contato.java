@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -50,7 +49,6 @@ public class Tab3Contato extends Fragment implements View.OnClickListener {
             String telefone = "123456789";
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel: " + telefone));
-
             PackageManager packageManager = getContext().getPackageManager();
             List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
             boolean isIntentSafe = activities.size() > 0;
@@ -60,7 +58,6 @@ public class Tab3Contato extends Fragment implements View.OnClickListener {
 
         } else if(v.getId() == R.id.btnWhatsappId){
             String whatsapp = "987654321";
-            //Uri whats = Uri.parse("Numero: " + whatsapp);
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, whatsapp);
@@ -75,7 +72,7 @@ public class Tab3Contato extends Fragment implements View.OnClickListener {
             }
 
         } else if(v.getId() == R.id.btnFacebookId) {
-            Uri face = Uri.parse("https://www.facebook.com/sharer/sharer.php?u=http://rp105.com/hotsite");
+            Uri face = Uri.parse("facebook://facebook.com/inbox");
             Intent intent = new Intent(Intent.ACTION_VIEW, face);
 
             PackageManager packageManager = getContext().getPackageManager();
@@ -84,6 +81,17 @@ public class Tab3Contato extends Fragment implements View.OnClickListener {
 
             if (isIntentSafe) {
                 startActivity(intent);
+            } else {
+               face = Uri.parse("https://www.facebook.com/sharer/sharer.php?u=http://rp105.com/hotsite");
+               intent = new Intent(Intent.ACTION_VIEW, face);
+
+                packageManager = getContext().getPackageManager();
+                activities = packageManager.queryIntentActivities(intent, 0);
+                isIntentSafe = activities.size() > 0;
+
+                if (isIntentSafe) {
+                    startActivity(intent);
+                }
             }
 
         }  else if(v.getId() == R.id.btnSiteId) {

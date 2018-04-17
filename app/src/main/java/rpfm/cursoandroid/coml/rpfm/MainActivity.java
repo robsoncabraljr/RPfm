@@ -1,7 +1,10 @@
 package rpfm.cursoandroid.coml.rpfm;
 
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
@@ -36,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

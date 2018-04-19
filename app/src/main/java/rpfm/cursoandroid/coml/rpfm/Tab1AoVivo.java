@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-
 import com.bumptech.glide.Glide;
 import java.io.IOException;
 
@@ -52,40 +51,25 @@ public class Tab1AoVivo extends Fragment {
         return rootView;
     }
 
-    private void controleVolume()
-    {
-        try
-        {
-
+    private void controleVolume() {
+        try {
             audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-            volumeSeekbar.setMax(audioManager
-                    .getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-            volumeSeekbar.setProgress(audioManager
-                    .getStreamVolume(AudioManager.STREAM_MUSIC));
-
-
-            volumeSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
-            {
+            volumeSeekbar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+            volumeSeekbar.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+            volumeSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
-                public void onStopTrackingTouch(SeekBar arg0)
-                {
-                }
+                public void onStopTrackingTouch(SeekBar arg0) {}
 
                 @Override
-                public void onStartTrackingTouch(SeekBar arg0)
-                {
-                }
+                public void onStartTrackingTouch(SeekBar arg0) {}
 
                 @Override
-                public void onProgressChanged(SeekBar arg0, int progress, boolean arg2)
-                {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                            progress, 0);
+                public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
                 }
             });
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -95,15 +79,13 @@ public class Tab1AoVivo extends Fragment {
         builder.setSmallIcon( R.drawable.icon_notificacao )
                 .setContentTitle( "RPfm 105.3" )
                 .setContentText( "Ao Vivo" )
-                .setAutoCancel( false );
+                .setAutoCancel( true );
         int id = 1;
         NotificationManager notifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notifyManager.notify( id, builder.build() );
     }
 
     private void streamPlay() {
-        //progressDialog = new ProgressDialog(getActivity());
-
         btnTocar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,8 +119,8 @@ public class Tab1AoVivo extends Fragment {
             btnTocar.setImageResource(R.drawable.play);
             imgStream.setImageResource(R.drawable.streaming_parado);
         } else {
-            Glide.with(getActivity()).load(R.drawable.streaming).asGif().into(imgStream);
             btnTocar.setImageResource(R.drawable.stop);
+            Glide.with(getActivity()).load(R.drawable.streaming).asGif().into(imgStream);
         }
     }
 
